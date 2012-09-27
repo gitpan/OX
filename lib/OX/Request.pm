@@ -3,7 +3,7 @@ BEGIN {
   $OX::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Request::VERSION = '0.01';
+  $OX::Request::VERSION = '0.02';
 }
 use Moose;
 use namespace::autoclean;
@@ -49,7 +49,7 @@ OX::Request - request object for OX
 
 =head1 VERSION
 
-version 0.01
+version 0.02
 
 =head1 SYNOPSIS
 

@@ -52,6 +52,7 @@
             "Try::Tiny" : "0",
             "Web::Request" : "0",
             "namespace::autoclean" : "0",
+            "perl" : "5.010",
             "strict" : "0",
             "warnings" : "0"
          }
@@ -88,7 +89,7 @@
          "web" : "https://github.com/stevan/OX"
       }
    },
-   "version" : "0.01",
+   "version" : "0.02",
    "x_Dist_Zilla" : {
       "plugins" : [
          {
