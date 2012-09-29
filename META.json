@@ -50,7 +50,7 @@
             "Plack::Util" : "0",
             "Scalar::Util" : "0",
             "Try::Tiny" : "0",
-            "Web::Request" : "0",
+            "Web::Request" : "0.05",
             "namespace::autoclean" : "0",
             "perl" : "5.010",
             "strict" : "0",
@@ -62,7 +62,6 @@
             "File::Find" : "0",
             "File::Temp" : "0",
             "HTTP::Request" : "0",
-            "MooseX::NonMoose" : "0",
             "Path::Router" : "0",
             "Plack::App::Path::Router::PSGI" : "0",
             "Plack::Component" : "0",
@@ -89,7 +88,7 @@
          "web" : "https://github.com/stevan/OX"
       }
    },
-   "version" : "0.03",
+   "version" : "0.04",
    "x_Dist_Zilla" : {
       "plugins" : [
          {

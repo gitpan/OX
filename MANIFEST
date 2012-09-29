@@ -68,6 +68,7 @@ t/request_lifecycle.t
 t/route_builders.t
 t/router_config.t
 t/router_dependencies.t
+t/streaming.t
 t/sugar_parsing.t
 t/uri_for.t
 t/utf8.t

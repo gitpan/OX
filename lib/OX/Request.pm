@@ -3,13 +3,13 @@ BEGIN {
   $OX::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Request::VERSION = '0.03';
+  $OX::Request::VERSION = '0.04';
 }
 use Moose;
 use namespace::autoclean;
 # ABSTRACT: request object for OX
 
-extends 'Web::Request';
+extends 'Web::Request' => { -version => 0.05 };
 
 
 sub default_encoding { 'UTF-8' }
@@ -49,7 +49,7 @@ OX::Request - request object for OX
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 

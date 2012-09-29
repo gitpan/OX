@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::HTTPMethod::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::HTTPMethod::VERSION = '0.03';
+  $OX::RouteBuilder::HTTPMethod::VERSION = '0.04';
 }
 use Moose;
 use namespace::autoclean;
@@ -87,7 +87,7 @@ OX::RouteBuilder::HTTPMethod - OX::RouteBuilder which routes to a method in a co
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 

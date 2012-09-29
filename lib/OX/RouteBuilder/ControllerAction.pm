@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.03';
+  $OX::RouteBuilder::ControllerAction::VERSION = '0.04';
 }
 use Moose;
 use namespace::autoclean;
@@ -83,7 +83,7 @@ OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action 
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 

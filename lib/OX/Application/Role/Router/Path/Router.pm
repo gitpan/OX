@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::Path::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::Path::Router::VERSION = '0.03';
+  $OX::Application::Role::Router::Path::Router::VERSION = '0.04';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -49,7 +49,7 @@ OX::Application::Role::Router::Path::Router - implementation of OX::Application:
 
 =head1 VERSION
 
-version 0.03
+version 0.04
 
 =head1 SYNOPSIS
 
