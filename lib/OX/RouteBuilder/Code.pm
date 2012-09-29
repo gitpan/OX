@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::Code::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::Code::VERSION = '0.02';
+  $OX::RouteBuilder::Code::VERSION = '0.03';
 }
 use Moose;
 use namespace::autoclean;
@@ -47,7 +47,7 @@ OX::RouteBuilder::Code - OX::RouteBuilder which routes to a coderef
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =head1 SYNOPSIS
 

@@ -7,6 +7,7 @@ use Test::More;
 use Test::Path::Router;
 use Plack::Test;
 use Test::Requires 'Template', 'MooseX::Types::Path::Class', 'Path::Class';
+use Path::Class;
 
 BEGIN {
     use_ok('OX::Application');
@@ -24,7 +25,8 @@ isa_ok($app, 'OX::Application');
 
 my $root = $app->resolve( service => 'app_root' );
 isa_ok($root, 'Path::Class::Dir');
-is($root, 't/apps/Counter-Improved', '... got the right root dir');
+is($root, file('t', 'apps', 'Counter-Improved')->stringify,
+   '... got the right root dir');
 
 my $router = $app->router;
 isa_ok($router, 'Path::Router');
@@ -45,7 +47,39 @@ routes_ok($router, {
 },
 "... our routes are valid");
 
-my $title = qr/<title>OX - Counter::Improved Example<\/title>/;
+sub test_counter {
+    my ($res, $count) = @_;
+
+    ok($res->is_success)
+        || diag($res->status_line . "\n" . $res->content);
+
+    my $content = $res->content;
+
+    like(
+        $content,
+        qr/<title>OX - Counter::Improved Example<\/title>/,
+        "got the right title"
+    );
+    like(
+        $content,
+        qr/<h1>$count<\/h1>/,
+        "got the right count"
+    );
+
+    my @paths = (
+        '/inc',
+        '/dec',
+        '/reset',
+    );
+
+    for my $path (@paths) {
+        like(
+            $content,
+            qr{<a href="$path">},
+            "link to $path exists"
+        );
+    }
+}
 
 test_psgi
       app    => $app->to_app,
@@ -54,38 +88,32 @@ test_psgi
           {
               my $req = HTTP::Request->new(GET => "http://localhost");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>0<\/h1>/, '... got the right content in index');
+              test_counter($res, 0);
           }
           {
               my $req = HTTP::Request->new(GET => "http://localhost/inc");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>1<\/h1>/, '... got the right content in /inc');
+              test_counter($res, 1);
           }
           {
               my $req = HTTP::Request->new(GET => "http://localhost/inc");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>2<\/h1>/, '... got the right content in /inc');
+              test_counter($res, 2);
           }
           {
               my $req = HTTP::Request->new(GET => "http://localhost/dec");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>1<\/h1>/, '... got the right content in /dec');
+              test_counter($res, 1);
           }
           {
               my $req = HTTP::Request->new(GET => "http://localhost/reset");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>0<\/h1>/, '... got the right content in /reset');
+              test_counter($res, 0);
           }
           {
               my $req = HTTP::Request->new(GET => "http://localhost");
               my $res = $cb->($req);
-              like($res->content, $title, '... got the right title');
-              like($res->content, qr/<h1>0<\/h1>/, '... got the right content in index');
+              test_counter($res, 0);
           }
       };
 

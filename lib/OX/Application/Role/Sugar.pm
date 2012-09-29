@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Sugar::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Sugar::VERSION = '0.02';
+  $OX::Application::Role::Sugar::VERSION = '0.03';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -147,7 +147,7 @@ OX::Application::Role::Sugar
 
 =head1 VERSION
 
-version 0.02
+version 0.03
 
 =for Pod::Coverage BUILD
 
