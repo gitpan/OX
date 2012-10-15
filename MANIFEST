@@ -17,6 +17,7 @@ lib/OX/Application/Role/RouterConfig.pm
 lib/OX/Application/Role/Sugar.pm
 lib/OX/Meta/Role/Class.pm
 lib/OX/Request.pm
+lib/OX/Response.pm
 lib/OX/RouteBuilder.pm
 lib/OX/RouteBuilder/Code.pm
 lib/OX/RouteBuilder/ControllerAction.pm
@@ -66,6 +67,7 @@ t/nested.t
 t/nested_with_middleware.t
 t/request_lifecycle.t
 t/route_builders.t
+t/route_validations.t
 t/router_config.t
 t/router_dependencies.t
 t/streaming.t

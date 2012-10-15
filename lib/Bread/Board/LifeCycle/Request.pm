@@ -3,7 +3,7 @@ BEGIN {
   $Bread::Board::LifeCycle::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $Bread::Board::LifeCycle::Request::VERSION = '0.04';
+  $Bread::Board::LifeCycle::Request::VERSION = '0.05';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -25,7 +25,7 @@ Bread::Board::LifeCycle::Request - lifecycle for request-scoped services
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

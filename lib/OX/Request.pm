@@ -3,7 +3,7 @@ BEGIN {
   $OX::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Request::VERSION = '0.04';
+  $OX::Request::VERSION = '0.05';
 }
 use Moose;
 use namespace::autoclean;
@@ -13,6 +13,7 @@ extends 'Web::Request' => { -version => 0.05 };
 
 
 sub default_encoding { 'UTF-8' }
+sub response_class   { 'OX::Response' }
 
 sub _router { (shift)->env->{'ox.router'} }
 
@@ -21,7 +22,7 @@ sub mapping {
     my $self = shift;
     my $match = $self->env->{'plack.router.match'};
     return unless $match;
-    return %{ $match->mapping };
+    return $match->mapping;
 }
 
 
@@ -49,7 +50,7 @@ OX::Request - request object for OX
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
@@ -76,6 +77,7 @@ This calls C<uri_for> on the given route, and returns the absolute URI path
 that results (including prepending C<SCRIPT_NAME>).
 
 =for Pod::Coverage default_encoding
+  response_class
 
 =head1 AUTHORS
 

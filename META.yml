@@ -7,6 +7,7 @@ build_requires:
   File::Find: 0
   File::Temp: 0
   HTTP::Request: 0
+  HTTP::Request::Common: 0
   Path::Router: 0
   Plack::App::Path::Router::PSGI: 0
   Plack::Component: 0
@@ -53,6 +54,7 @@ requires:
   Scalar::Util: 0
   Try::Tiny: 0
   Web::Request: 0.05
+  Web::Response: 0
   namespace::autoclean: 0
   perl: 5.010
   strict: 0
@@ -61,7 +63,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=OX
   homepage: http://metacpan.org/release/OX
   repository: git://github.com/stevan/OX.git
-version: 0.04
+version: 0.05
 x_Dist_Zilla:
   plugins:
     -

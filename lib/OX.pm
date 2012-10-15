@@ -3,7 +3,7 @@ BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.04';
+  $OX::VERSION = '0.05';
 }
 use Moose::Exporter;
 use 5.010;
@@ -147,7 +147,7 @@ OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

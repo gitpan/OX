@@ -3,7 +3,7 @@ BEGIN {
   $OX::Types::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Types::VERSION = '0.04';
+  $OX::Types::VERSION = '0.05';
 }
 use strict;
 use warnings;
@@ -29,7 +29,7 @@ OX::Types
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 AUTHORS
 

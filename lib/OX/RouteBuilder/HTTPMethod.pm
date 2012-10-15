@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::HTTPMethod::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::HTTPMethod::VERSION = '0.04';
+  $OX::RouteBuilder::HTTPMethod::VERSION = '0.05';
 }
 use Moose;
 use namespace::autoclean;
@@ -25,8 +25,8 @@ sub compile_routes {
     my $target = sub {
         my ($req) = @_;
 
-        my %match = $req->mapping;
-        my $a = $match{action};
+        my $match = $req->mapping;
+        my $a = $match->{action};
 
         my $s = $app->fetch($a);
         return [
@@ -87,7 +87,7 @@ OX::RouteBuilder::HTTPMethod - OX::RouteBuilder which routes to a method in a co
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

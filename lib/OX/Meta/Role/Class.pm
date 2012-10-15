@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Class::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Class::VERSION = '0.04';
+  $OX::Meta::Role::Class::VERSION = '0.05';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -166,7 +166,7 @@ OX::Meta::Role::Class
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =for Pod::Coverage add_middleware
   add_mount

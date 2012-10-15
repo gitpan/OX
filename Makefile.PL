@@ -15,6 +15,7 @@ my %WriteMakefileArgs = (
     "File::Find" => 0,
     "File::Temp" => 0,
     "HTTP::Request" => 0,
+    "HTTP::Request::Common" => 0,
     "Path::Router" => 0,
     "Plack::App::Path::Router::PSGI" => 0,
     "Plack::Component" => 0,
@@ -54,11 +55,12 @@ my %WriteMakefileArgs = (
     "Scalar::Util" => 0,
     "Try::Tiny" => 0,
     "Web::Request" => "0.05",
+    "Web::Response" => 0,
     "namespace::autoclean" => 0,
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.04",
+  "VERSION" => "0.05",
   "test" => {
     "TESTS" => "t/*.t"
   }

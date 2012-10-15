@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::VERSION = '0.04';
+  $OX::Application::VERSION = '0.05';
 }
 use Moose 2.0200;
 use namespace::autoclean;
@@ -151,7 +151,7 @@ OX::Application - base class for OX applications
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 

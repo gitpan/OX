@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.04';
+  $OX::RouteBuilder::ControllerAction::VERSION = '0.05';
 }
 use Moose;
 use namespace::autoclean;
@@ -25,9 +25,9 @@ sub compile_routes {
     my $target = sub {
         my ($req) = @_;
 
-        my %match = $req->mapping;
-        my $c = $match{controller};
-        my $a = $match{action};
+        my $match = $req->mapping;
+        my $c = $match->{controller};
+        my $a = $match->{action};
 
         my $s = $app->fetch($c);
         return [
@@ -83,7 +83,7 @@ OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action 
 
 =head1 VERSION
 
-version 0.04
+version 0.05
 
 =head1 SYNOPSIS
 
