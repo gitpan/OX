@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Request::VERSION = '0.05';
+  $OX::Application::Role::Request::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -51,6 +51,7 @@ sub handle_response {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -59,7 +60,7 @@ OX::Application::Role::Request - application role to allow the use of request an
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -133,4 +134,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

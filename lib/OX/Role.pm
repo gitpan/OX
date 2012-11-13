@@ -1,34 +1,33 @@
-package OX;
+package OX::Role;
 BEGIN {
-  $OX::AUTHORITY = 'cpan:STEVAN';
+  $OX::Role::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.06';
+  $OX::Role::VERSION = '0.06';
 }
 use Moose::Exporter;
 use 5.010;
-# ABSTRACT: the hardest working two letters in Perl
+# ABSTRACT: declare roles for your OX applications
 
 use Bread::Board::Declare 0.11 ();
 use Carp 'confess';
-use Class::Load 0.10 'load_class';
 use namespace::autoclean ();
 use Scalar::Util 'blessed';
 
+use OX ();
 
-my ($import, undef, $init_meta) = Moose::Exporter->build_import_methods(
-    also      => ['Moose', 'Bread::Board::Declare'],
+
+my ($import) = Moose::Exporter->build_import_methods(
+    also      => ['Moose::Role', 'Bread::Board::Declare'],
     with_meta => [qw(router route mount wrap)],
-    as_is     => [qw(as literal)],
-    install   => [qw(unimport)],
-    class_metaroles => {
-        class => ['OX::Meta::Role::Class'],
+    as_is     => [\&OX::as, \&OX::literal],
+    install   => [qw(unimport init_meta)],
+    role_metaroles => {
+        role                    => ['OX::Meta::Role::Role'],
+        application_to_class    => ['OX::Meta::Role::Application::ToClass'],
+        application_to_role     => ['OX::Meta::Role::Application::ToRole'],
+        application_to_instance => ['OX::Meta::Role::Application::ToInstance'],
     },
-    base_class_roles => [
-        'OX::Application::Role::Router::Path::Router',
-        'OX::Application::Role::RouteBuilder',
-        'OX::Application::Role::Sugar',
-    ],
 );
 
 sub import {
@@ -36,16 +35,6 @@ sub import {
     goto $import;
 }
 
-sub init_meta {
-    my $package = shift;
-    my %options = @_;
-    $options{base_class} = 'OX::Application';
-    Moose->init_meta(%options);
-    $package->$init_meta(%options);
-}
-
-
-sub as (&) { $_[0] }
 
 
 sub router {
@@ -57,17 +46,9 @@ sub router {
         $meta->add_route_builder($_) for @{ $args[0] };
         shift @args;
     }
-    my ($body, %params) = @args;
+    my ($body) = @args;
 
-    if (!ref($body)) {
-        load_class($body);
-        $meta->add_method(router_class        => sub { $body });
-        $meta->add_method(router_dependencies => sub { \%params });
-    }
-    elsif (blessed($body)) {
-        $meta->add_method(build_router => sub { $body });
-    }
-    elsif (ref($body) eq 'CODE') {
+    if (ref($body) eq 'CODE') {
         if (!$meta->has_route_builders) {
             $meta->add_route_builder('OX::RouteBuilder::ControllerAction');
             $meta->add_route_builder('OX::RouteBuilder::HTTPMethod');
@@ -77,7 +58,7 @@ sub router {
         $body->();
     }
     else {
-        confess "Unknown argument to 'router': $body";
+        confess "Roles only support the block form of 'router', not $body";
     }
 }
 
@@ -142,14 +123,6 @@ sub wrap {
 }
 
 
-sub literal {
-    my ($value) = @_;
-    return Bread::Board::Literal->new(
-        name  => '__ANON__',
-        value => $value,
-    );
-}
-
 
 1;
 
@@ -159,7 +132,7 @@ __END__
 
 =head1 NAME
 
-OX - the hardest working two letters in Perl
+OX::Role - declare roles for your OX applications
 
 =head1 VERSION
 
@@ -167,77 +140,55 @@ version 0.06
 
 =head1 SYNOPSIS
 
-The following describes the outline of how a model-view-controller application
-might be configured as an OX application.
+  package MyApp::Role::Auth;
+  use OX::Role;
+
+  has auth => (
+      is  => 'ro',
+      isa => 'MyApp::Auth',
+  );
+
+  router as {
+      route '/auth/login'  => 'auth.login';
+      route '/auth/logout' => 'auth.logout';
+  };
 
   package MyApp;
   use OX;
 
-  has model => (
-      is        => 'ro',
-      isa       => 'MyApp::Model',
-      lifecycle => 'Singleton',
-  );
-
-  has template_root => (
-      is     => 'ro',
-      isa    => 'Str',
-      value  => 'root',
-  );
-
-  has view => (
-      is           => 'ro',
-      isa          => 'Template',
-      dependencies => {
-          INCLUDE_PATH => 'template_root'
-      },
-  );
+  with 'MyApp::Role::Auth';
 
   has root => (
-      is    => 'ro',
-      isa   => 'MyApp::Controller',
-      infer => 1,
+      is  => 'ro',
+      isa => 'MyApp::Controller::Root',
   );
 
   router as {
-      route '/'            => 'root.index';
-      route '/inc'         => 'root.inc';
-      route '/dec'         => 'root.dec';
-      route '/reset'       => 'root.reset';
-      route '/set/:number' => 'root.set' => (
-          number => { isa => 'Int' },
-      );
+      route '/' => 'root.index';
   };
 
 =head1 DESCRIPTION
 
-OX is a web application framework based on L<Bread::Board>, L<Path::Router>,
-and L<PSGI>. Bread::Board lets you build your application from a collection of
-normal L<Moose> objects, organized together in a "container", which allows
-components to easily interoperate without any additional configuration.
-Path::Router maps incoming request paths to method calls on the objects in the
-Bread::Board container. Finally, at compile time, the framework turns your
-entire application into a simple PSGI coderef, which can be used directly by
-any PSGI-supporting web server.
+This module allows you to define roles to be applied to your L<OX>
+applications. OX roles can define any part of the application that an OX class
+can, except for declaring a pre-built router or router class. When you consume
+the role, all of the services, routes, mounts, and middleware will be composed
+into the application class.
 
-The philosophy behind OX is that the building blocks of your web application
-should just "click" together, without the overhead of an additional plugin
-system or "glue" layer. The combination of Bread::Board, Path::Router, and the
-Moose object system provides all that is needed for requests to be mapped to
-methods and for components to communicate with each other. For example, all
-configuration information can be provided via roles applied to the application
-class (affecting application initialization). Similarly, additional runtime
-features can be added by providing your own request (sub)class.
+During composition, conflicts between mounts and routes will be checked for,
+similar to how roles normally detect conflicts between methods and attributes.
+If two mounts are declared with the same path, a conflict will be generated,
+and if two routes are declared with the same path (disregarding the names of
+variable path components), a conflict will also be generated. The consuming
+class can resolve these types of conflicts by declaring its own mount or route,
+respectively. If a route is declared which would be shadowed by a mount
+declared in another role, this generates an unresolvable conflict - you'll need
+to fix this in the roles themselves.
 
-Additionally, OX provides an easy-to-use "sugar" layer (based on
-L<Bread::Board::Declare>) that makes writing a web application as easy as
-writing any Moose class. The OX sugar layer supports the full complement of
-Moose features (attributes, roles, and more), as well as addiitonal sugar
-methods for mapping request routes to object methods. (See
-L<Bread::Board::Declare>, L<OX::Application::Role::Router::Path::Router>, and
-L<OX::Application::Role::RouteBuilder> for more detailed information.) You're
-also free to eschew the sugary syntax and build your application manually --
-see L<OX::Application> for more information on going that route.
+Note that middleware applied via a role will still wrap the entire application.
+Also, since the router keyword doesn't happen at compile time, you should most
+likely put the C<with> statement for your application roles after the C<router>
+block.
 
 =head1 FUNCTIONS
 
@@ -270,20 +221,6 @@ L<OX::RouteBuilder::Code>, whichever one matches the route. If you want to be
 able to specify routes in other ways, you can specify a list of
 L<OX::RouteBuilder> classes as the first argument to C<router>, which will be
 used in place of the previously mentioned list.
-
-  router 'My::Custom::Router' => (
-      foo => 'some_service',
-  );
-
-  router(My::Custom::Router->new(%router_args));
-
-If you have declared a router manually elsewhere, you can pass in either the
-class name or the built router object to C<router> instead of a block. It will
-be used directly in that case. If you pass a class name, it can take an
-optional hash of dependencies, which will be resolved and passed into the
-class's constructor as arguments. Note that parentheses are required if the
-argument is a literal constructor call, to avoid it being parsed as an indirect
-method call.
 
 =head2 route $path, $action_spec, %params
 
@@ -419,46 +356,6 @@ rather than services. This is useful for situations where the constructor
 values aren't user-configurable, but are inherent to your app's structure, such
 as the C<path> option to L<Plack::Middleware::Static>, or the C<subrequest>
 option to L<Plack::Middleware::ErrorDocument>.
-
-=head1 BUGS
-
-No known bugs.
-
-Please report any bugs through RT: email
-C<bug-ox at rt.cpan.org>, or browse to
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=OX>.
-
-=head1 SEE ALSO
-
-=head1 SUPPORT
-
-The IRC channel for this project is C<#ox> on C<irc.perl.org>.
-
-You can find this documentation for this module with the perldoc command.
-
-    perldoc OX
-
-You can also look for information at:
-
-=over 4
-
-=item * AnnoCPAN: Annotated CPAN documentation
-
-L<http://annocpan.org/dist/OX>
-
-=item * CPAN Ratings
-
-L<http://cpanratings.perl.org/d/OX>
-
-=item * RT: CPAN's request tracker
-
-L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=OX>
-
-=item * Search CPAN
-
-L<http://search.cpan.org/dist/OX>
-
-=back
 
 =for Pod::Coverage import
   init_meta

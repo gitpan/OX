@@ -67,6 +67,15 @@ use Plack::App::Path::Router::PSGI;
     package Bar;
     use OX;
 
+    sub app_from_router {
+        my $self = shift;
+        my ($router) = @_;
+
+        return Plack::App::Path::Router::PSGI->new(
+            router => $router,
+        )->to_app;
+    }
+
     router 'Bar::Router';
 }
 
@@ -79,7 +88,7 @@ use Plack::App::Path::Router::PSGI;
         my $self = shift;
 
         $self->add_route('/' => (
-            target => sub { shift->new_response(200, [], 'root') }
+            target => sub { shift->new_response([ 200, [], ['root'] ]) }
         ));
         $self->add_route('/:number' => (
             validations => {
@@ -102,8 +111,10 @@ use Plack::App::Path::Router::PSGI;
 }
 
 for my $class (qw(Foo Bar Baz)) {
-    my $app = Foo->new;
+    my $app = $class->new;
     my $router = $app->router;
+
+    isa_ok($app, $class);
 
     path_ok($router, $_, '... ' . $_ . ' is a valid path')
         for qw[

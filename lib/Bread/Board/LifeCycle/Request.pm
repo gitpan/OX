@@ -3,7 +3,7 @@ BEGIN {
   $Bread::Board::LifeCycle::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $Bread::Board::LifeCycle::Request::VERSION = '0.05';
+  $Bread::Board::LifeCycle::Request::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -17,6 +17,7 @@ with 'Bread::Board::LifeCycle::Singleton';
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -25,7 +26,7 @@ Bread::Board::LifeCycle::Request - lifecycle for request-scoped services
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -71,4 +72,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

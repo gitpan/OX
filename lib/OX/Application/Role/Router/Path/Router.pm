@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::Path::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::Path::Router::VERSION = '0.05';
+  $OX::Application::Role::Router::Path::Router::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -41,6 +41,7 @@ sub app_from_router {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -49,7 +50,7 @@ OX::Application::Role::Router::Path::Router - implementation of OX::Application:
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -103,4 +104,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

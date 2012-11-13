@@ -3,13 +3,18 @@ BEGIN {
   $OX::Application::Role::Sugar::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Sugar::VERSION = '0.05';
+  $OX::Application::Role::Sugar::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
 
 use Bread::Board;
 use Plack::App::URLMap;
+
+has _manual_router_config => (
+    is  => 'rw',
+    isa => 'HashRef',
+);
 
 sub BUILD { }
 after BUILD => sub {
@@ -18,6 +23,15 @@ after BUILD => sub {
     my $manual_router_config = $self->has_service('RouterConfig')
         ? $self->resolve(service => 'RouterConfig')
         : {};
+    $self->_manual_router_config($manual_router_config);
+
+    $self->regenerate_router_config;
+};
+
+sub regenerate_router_config {
+    my $self = shift;
+
+    my $manual_router_config = $self->_manual_router_config;
     my $sugar_router_config = $self->meta->router_config;
 
     container $self => as {
@@ -26,14 +40,14 @@ after BUILD => sub {
             %$sugar_router_config,
         };
     };
-};
+}
 
 around build_middleware => sub {
     my $orig = shift;
     my $self = shift;
 
     my @middleware = map { $self->_resolve_middleware($_) }
-                         $self->meta->middleware;
+                         $self->meta->all_middleware;
 
     return [
         @{ $self->$orig(@_) },
@@ -92,24 +106,22 @@ around build_app => sub {
     my $urlmap = Plack::App::URLMap->new;
 
     for my $mount ($self->meta->mounts) {
-        if (exists $mount->{app}) {
-            $urlmap->map($mount->{path} => $mount->{app});
+        if ($mount->isa('OX::Meta::Mount::App')) {
+            $urlmap->map($mount->path => $mount->app);
         }
-        elsif (exists $mount->{class}) {
-            my $class = $mount->{class};
-            my %deps = %{ $mount->{dependencies} };
-
+        elsif ($mount->isa('OX::Meta::Mount::Class')) {
             my $service = Bread::Board::ConstructorInjection->new(
                 name         => '__ANON__',
-                class        => $mount->{class},
-                dependencies => $mount->{dependencies},
+                class        => $mount->class,
+                dependencies => $mount->dependencies,
                 parent       => $self,
             );
             my $app = $service->get;
-            $urlmap->map($mount->{path} => $app->to_app);
+            $urlmap->map($mount->path => $app->to_app);
         }
         else {
-            die "Unknown mount spec for path $mount->{path}";
+            die "Unknown mount type for path " . $mount->path . ": "
+              . blessed($mount);
         }
     }
 
@@ -135,42 +147,12 @@ around to_app => sub {
     };
 };
 
-
-1;
-
-__END__
 =pod
 
-=head1 NAME
-
-OX::Application::Role::Sugar
-
-=head1 VERSION
-
-version 0.05
-
-=for Pod::Coverage BUILD
-
-=head1 AUTHORS
-
-=over 4
-
-=item *
-
-Stevan Little <stevan.little at iinteractive.com>
-
-=item *
-
-Jesse Luehrs <doy at cpan dot org>
-
-=back
-
-=head1 COPYRIGHT AND LICENSE
-
-This software is copyright (c) 2012 by Infinity Interactive.
-
-This is free software; you can redistribute it and/or modify it under
-the same terms as the Perl 5 programming language system itself.
+=for Pod::Coverage
+  BUILD
+  regenerate_router_config
 
 =cut
 
+1;

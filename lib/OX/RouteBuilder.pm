@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::VERSION = '0.05';
+  $OX::RouteBuilder::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -55,6 +55,7 @@ sub extract_defaults_and_validations {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -63,7 +64,7 @@ OX::RouteBuilder - abstract role for classes that turn configuration into a rout
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 DESCRIPTION
 
@@ -150,4 +151,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

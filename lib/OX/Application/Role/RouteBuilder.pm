@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::RouteBuilder::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::RouteBuilder::VERSION = '0.05';
+  $OX::Application::Role::RouteBuilder::VERSION = '0.06';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -51,6 +51,7 @@ sub parse_route {
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -59,7 +60,7 @@ OX::Application::Role::RouteBuilder - application role to configure a router bas
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -147,4 +148,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

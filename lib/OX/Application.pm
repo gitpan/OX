@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::VERSION = '0.05';
+  $OX::Application::VERSION = '0.06';
 }
 use Moose 2.0200;
 use namespace::autoclean;
@@ -143,6 +143,7 @@ __PACKAGE__->meta->make_immutable;
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -151,7 +152,7 @@ OX::Application - base class for OX applications
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -258,4 +259,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-

@@ -3,20 +3,21 @@ BEGIN {
   $OX::Response::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Response::VERSION = '0.05';
+  $OX::Response::VERSION = '0.06';
 }
 use Moose;
+use namespace::autoclean;
 # ABSTRACT: response object for OX
 
 extends 'Web::Response';
 
 
 __PACKAGE__->meta->make_immutable;
-no Moose;
 
 1;
 
 __END__
+
 =pod
 
 =head1 NAME
@@ -25,7 +26,7 @@ OX::Response - response object for OX
 
 =head1 VERSION
 
-version 0.05
+version 0.06
 
 =head1 SYNOPSIS
 
@@ -62,4 +63,3 @@ This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
 
 =cut
-
