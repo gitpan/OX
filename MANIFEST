@@ -80,6 +80,7 @@ t/inheritance.t
 t/inline_dependencies.t
 t/lotsa_routing.t
 t/middleware.t
+t/middleware_conditional.t
 t/middleware_dependencies.t
 t/middleware_inheritance.t
 t/middleware_sugar.t

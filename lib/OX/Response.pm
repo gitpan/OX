@@ -3,7 +3,7 @@ BEGIN {
   $OX::Response::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Response::VERSION = '0.06';
+  $OX::Response::VERSION = '0.07';
 }
 use Moose;
 use namespace::autoclean;
@@ -26,7 +26,7 @@ OX::Response - response object for OX
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

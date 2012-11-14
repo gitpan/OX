@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::ToRole::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::ToRole::VERSION = '0.06';
+  $OX::Meta::Role::Application::ToRole::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -33,8 +33,6 @@ sub _apply_routes {
     for my $conflict ($role1->mixed_conflicts) {
         $role2->_add_mixed_conflict($conflict);
     }
-
-    $role2->_add_middleware($role1->middleware);
 }
 
 1;

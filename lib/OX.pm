@@ -3,7 +3,7 @@ BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.06';
+  $OX::VERSION = '0.07';
 }
 use Moose::Exporter;
 use 5.010;
@@ -18,7 +18,7 @@ use Scalar::Util 'blessed';
 
 my ($import, undef, $init_meta) = Moose::Exporter->build_import_methods(
     also      => ['Moose', 'Bread::Board::Declare'],
-    with_meta => [qw(router route mount wrap)],
+    with_meta => [qw(router route mount wrap wrap_if)],
     as_is     => [qw(as literal)],
     install   => [qw(unimport)],
     class_metaroles => {
@@ -142,6 +142,17 @@ sub wrap {
 }
 
 
+sub wrap_if {
+    my ($meta, $condition, $middleware, %deps) = @_;
+
+    $meta->add_middleware(
+        condition  => $condition,
+        middleware => $middleware,
+        deps       => \%deps,
+    );
+}
+
+
 sub literal {
     my ($value) = @_;
     return Bread::Board::Literal->new(
@@ -163,7 +174,7 @@ OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 
@@ -406,6 +417,19 @@ constructor call, to avoid it being parsed as an indirect method call.
 
 If you specify a coderef as the middleware, it will call that coderef, passing
 in the application coderef so far, and use the result as the new application.
+
+=head2 wrap_if
+
+C<wrap_if> works identically to C<wrap>, except that it requires an additional
+initial coderef parameter for the condition under which this middleware should
+be applied. This condition will be run on every request, and will receive the
+C<$env> hashref as a parameter, so the condition can depend on variables in the
+environment. For instance:
+
+  wrap_if sub { $_[0]->{REMOTE_ADDR} eq '127.0.0.1' },
+      'Plack::Middleware::StackTrace' => (
+          force => literal(1),
+      );
 
 =head2 literal
 

@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Mount::Class::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Mount::Class::VERSION = '0.06';
+  $OX::Meta::Mount::Class::VERSION = '0.07';
 }
 use Moose;
 use namespace::autoclean;

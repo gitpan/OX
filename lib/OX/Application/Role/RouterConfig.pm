@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::RouterConfig::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::RouterConfig::VERSION = '0.06';
+  $OX::Application::Role::RouterConfig::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -55,7 +55,7 @@ OX::Application::Role::RouterConfig - adds some common shortcuts to route declar
 
 =head1 VERSION
 
-version 0.06
+version 0.07
 
 =head1 SYNOPSIS
 

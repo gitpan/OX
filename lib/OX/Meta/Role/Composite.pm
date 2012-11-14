@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Composite::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Composite::VERSION = '0.06';
+  $OX::Meta::Role::Composite::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -63,7 +63,6 @@ sub _merge_routes {
                 $mounts{$path} = $mount;
             }
         }
-        $self->_add_middleware($role->middleware);
     }
 
     my %mixed;

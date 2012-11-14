@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::HasMiddleware::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::HasMiddleware::VERSION = '0.06';
+  $OX::Meta::Role::HasMiddleware::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;

@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::ToClass::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::ToClass::VERSION = '0.06';
+  $OX::Meta::Role::Application::ToClass::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -45,8 +45,6 @@ sub _apply_routes {
             }
         }
     }
-
-    $class->_add_middleware($role->middleware);
 }
 
 1;

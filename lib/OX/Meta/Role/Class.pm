@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Class::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Class::VERSION = '0.06';
+  $OX::Meta::Role::Class::VERSION = '0.07';
 }
 use Moose::Role;
 use namespace::autoclean;
