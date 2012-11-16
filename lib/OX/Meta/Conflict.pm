@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Conflict::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Conflict::VERSION = '0.07';
+  $OX::Meta::Conflict::VERSION = '0.08';
 }
 use Moose;
 use namespace::autoclean;

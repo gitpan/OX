@@ -1,5 +1,12 @@
 Revision history for OX
 
+0.08  2012-11-16
+      - allow declaring nested routers as mounts
+      - $r->uri_for("string") now is a shortcut for
+        $r->uri_for({name => "string"});
+      - ControllerAction and HTTPMethod route builders now also set up a
+        default 'name' for routes
+
 0.07  2012-11-14
       - actually, disable middleware in roles for now, because it's not clear
         that it actually makes sense

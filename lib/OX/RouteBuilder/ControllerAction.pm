@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.07';
+  $OX::RouteBuilder::ControllerAction::VERSION = '0.08';
 }
 use Moose;
 use namespace::autoclean;
@@ -66,6 +66,7 @@ sub parse_action_spec {
     return {
         controller => $1,
         action     => $2,
+        name       => $action_spec,
     };
 }
 
@@ -84,7 +85,7 @@ OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action 
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -107,6 +108,9 @@ class. The C<action_spec> should be a string in the form
 C<"$controller.$action">, where C<$controller> is the name of a service which
 provides a controller instance, and C<$action> is the name of a method on that
 class.
+
+C<controller> and C<action> will also be automatically added as defaults for
+the route, as well as C<name> (which will be set to C<"$controller.$action">.
 
 =for Pod::Coverage compile_routes
   parse_action_spec

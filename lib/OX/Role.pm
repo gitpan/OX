@@ -3,7 +3,7 @@ BEGIN {
   $OX::Role::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Role::VERSION = '0.07';
+  $OX::Role::VERSION = '0.08';
 }
 use Moose::Exporter;
 use 5.010;
@@ -11,6 +11,7 @@ use 5.010;
 
 use Bread::Board::Declare 0.11 ();
 use Carp 'confess';
+use Moose::Util 'find_meta';
 use namespace::autoclean ();
 use Scalar::Util 'blessed';
 
@@ -19,8 +20,8 @@ use OX ();
 
 my ($import) = Moose::Exporter->build_import_methods(
     also      => ['Moose::Role', 'Bread::Board::Declare'],
-    with_meta => [qw(router route mount)],
-    as_is     => [\&OX::as, \&OX::literal],
+    with_meta => [qw(router)],
+    as_is     => [\&OX::route, \&OX::mount, \&OX::as, \&OX::literal],
     install   => [qw(unimport init_meta)],
     role_metaroles => {
         role                    => ['OX::Meta::Role::Role'],
@@ -31,16 +32,23 @@ my ($import) = Moose::Exporter->build_import_methods(
 );
 
 sub import {
-    namespace::autoclean->import(-cleanee => scalar(caller));
+    my ($package, $args) = @_;
+    my $into = $args && $args->{into} ? $args->{into} : caller;
+    namespace::autoclean->import(-cleanee => $into);
     goto $import;
 }
 
 
 
 sub router {
-    my ($meta, @args) = @_;
+    my ($top_meta, @args) = @_;
+
+    my $meta = $OX::CURRENT_CLASS
+        ? _new_router_meta($OX::CURRENT_CLASS)
+        : $top_meta;
+
     confess "Only one top level router is allowed"
-        if $meta->has_route_builders;
+        if !$OX::CURRENT_CLASS && $meta->has_route_builders;
 
     if (ref($args[0]) eq 'ARRAY') {
         $meta->add_route_builder($_) for @{ $args[0] };
@@ -50,67 +58,53 @@ sub router {
 
     if (ref($body) eq 'CODE') {
         if (!$meta->has_route_builders) {
-            $meta->add_route_builder('OX::RouteBuilder::ControllerAction');
-            $meta->add_route_builder('OX::RouteBuilder::HTTPMethod');
-            $meta->add_route_builder('OX::RouteBuilder::Code');
+            if ($OX::CURRENT_CLASS) {
+                for my $route_builder ($OX::CURRENT_CLASS->route_builders) {
+                    $meta->add_route_builder($route_builder);
+                }
+            }
+            else {
+                $meta->add_route_builder('OX::RouteBuilder::ControllerAction');
+                $meta->add_route_builder('OX::RouteBuilder::HTTPMethod');
+                $meta->add_route_builder('OX::RouteBuilder::Code');
+            }
         }
 
+        local $OX::CURRENT_CLASS = $meta;
         $body->();
     }
     else {
         confess "Roles only support the block form of 'router', not $body";
     }
+
+    if (defined wantarray) {
+        return $meta->new_object->to_app;
+    }
 }
 
+my $default_class_meta;
 
-sub route {
-    my ($meta, $path, $action_spec, %params) = @_;
+sub _new_router_meta {
+    my ($meta) = @_;
 
-    my ($class, $route_spec) = $meta->route_builder_for($action_spec);
-    $meta->add_route(
-        path                => $path,
-        class               => $class,
-        route_spec          => $route_spec,
-        params              => \%params,
-        definition_location => $meta->name,
+    if (!$meta->isa('Moose::Meta::Role')) {
+        return OX::_new_router_meta($meta);
+    }
+
+    $default_class_meta ||= do {
+        OX->import({ into => "OX::Role::__DEFAULT_META__" });
+        find_meta('OX::Role::__DEFAULT_META__');
+    };
+
+    my $new = find_meta($default_class_meta)->name->create_anon_class(
+        superclasses => [$default_class_meta->superclasses],
+        roles        => [$meta->name],
     );
+    $new->clear_app_state;
+    return $new;
 }
 
 
-sub mount {
-    my ($meta, $path, $mount, %params) = @_;
-
-    my %default = (
-        path                => $path,
-        definition_location => $meta->name,
-    );
-
-    if (!ref($mount)) {
-        $meta->add_mount(
-            %default,
-            class        => $mount,
-            dependencies => \%params,
-        );
-    }
-    elsif (blessed($mount)) {
-        confess "Class " . blessed($mount) . " must implement a to_app method"
-            unless $mount->can('to_app');
-
-        $meta->add_mount(
-            %default,
-            app => $mount->to_app,
-        );
-    }
-    elsif (ref($mount) eq 'CODE') {
-        $meta->add_mount(
-            %default,
-            app => $mount,
-        )
-    }
-    else {
-        confess "Unknown mount $mount";
-    }
-}
 
 
 
@@ -126,7 +120,7 @@ OX::Role - declare roles for your OX applications
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -210,6 +204,26 @@ L<OX::RouteBuilder::Code>, whichever one matches the route. If you want to be
 able to specify routes in other ways, you can specify a list of
 L<OX::RouteBuilder> classes as the first argument to C<router>, which will be
 used in place of the previously mentioned list.
+
+  router as {
+      route '/' => 'root.index';
+      mount '/admin' => router as {
+          wrap "MyApp::Middleware::Auth";
+          route '/' => 'admin.index';
+      };
+  };
+
+In addition, router blocks handle nesting properly. If you declare a new router
+block inside of the main router block, it will allow you to define an entirely
+separate application which you can mount wherever you want (see C<mount>
+below). Nested routers will have full access to the services defined in the
+role. This can be used, for instance, to apply certain middleware to only
+parts of the application, or just to organize the application better.
+
+Note that while they are being defined inline, these are still just normal
+mounts. This means that examining the C<path> in the request object will only
+give the path relative to the nested router (the remainder will be in
+C<script_name>).
 
 =head2 route $path, $action_spec, %params
 

@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::HTTPMethod::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::HTTPMethod::VERSION = '0.07';
+  $OX::RouteBuilder::HTTPMethod::VERSION = '0.08';
 }
 use Moose;
 use namespace::autoclean;
@@ -70,6 +70,7 @@ sub parse_action_spec {
 
     return {
         action => $1,
+        name   => $action_spec,
     };
 }
 
@@ -88,7 +89,7 @@ OX::RouteBuilder::HTTPMethod - OX::RouteBuilder which routes to a method in a co
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -114,6 +115,9 @@ corresponds to the lowercased version of the HTTP method used in the request
 (for instance, C<get>, C<post>, etc). If no method is found, it will fall back
 to looking for a method named C<any>. If that isn't found either, an error will
 be raised.
+
+C<action> will automatically be added to the route as a default, as well as
+C<name> (which will be set to the same thing as C<action>).
 
 =for Pod::Coverage compile_routes
   parse_action_spec

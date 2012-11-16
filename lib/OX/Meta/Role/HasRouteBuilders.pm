@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::HasRouteBuilders::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::HasRouteBuilders::VERSION = '0.07';
+  $OX::Meta::Role::HasRouteBuilders::VERSION = '0.08';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -17,9 +17,10 @@ has route_builders => (
     isa     => 'ArrayRef[Str]',
     default => sub { [] },
     handles => {
-        route_builders     => 'elements',
-        has_route_builders => 'count',
-        _add_route_builder => 'push',
+        route_builders        => 'elements',
+        has_route_builders    => 'count',
+        _add_route_builder    => 'push',
+        _clear_route_builders => 'clear',
     },
 );
 

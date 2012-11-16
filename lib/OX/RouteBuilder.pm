@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::VERSION = '0.07';
+  $OX::RouteBuilder::VERSION = '0.08';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -64,7 +64,7 @@ OX::RouteBuilder - abstract role for classes that turn configuration into a rout
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 DESCRIPTION
 

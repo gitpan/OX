@@ -3,7 +3,7 @@ BEGIN {
   $OX::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Request::VERSION = '0.07';
+  $OX::Request::VERSION = '0.08';
 }
 use Moose;
 use namespace::autoclean;
@@ -28,11 +28,19 @@ sub mapping {
 
 sub uri_for {
     my ($self, $route) = @_;
+
     my $uri_base = $self->script_name || '/';
     $uri_base .= '/' unless $uri_base =~ m+/$+;
+
+    if (!ref($route)) {
+        $route = { name => $route };
+    }
+
     my $path_info = $self->_router->uri_for( %$route );
+
     confess "No URI found for route"
         unless defined($path_info);
+
     return $uri_base . $path_info;
 }
 
@@ -51,7 +59,7 @@ OX::Request - request object for OX
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -74,8 +82,10 @@ L<Path::Router> as the router.
 
 =head2 uri_for($route)
 
-This calls C<uri_for> on the given route, and returns the absolute URI path
-that results (including prepending C<SCRIPT_NAME>).
+This calls C<uri_for> on the given route hashref, and returns the absolute URI
+path that results (including prepending C<SCRIPT_NAME>). If a string is passed
+rather than a hashref, this is treated as equivalent to
+C<< { name => $route } >>.
 
 =for Pod::Coverage default_encoding
   response_class

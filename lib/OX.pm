@@ -3,7 +3,7 @@ BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.07';
+  $OX::VERSION = '0.08';
 }
 use Moose::Exporter;
 use 5.010;
@@ -12,14 +12,15 @@ use 5.010;
 use Bread::Board::Declare 0.11 ();
 use Carp 'confess';
 use Class::Load 0.10 'load_class';
+use Moose::Util 'find_meta';
 use namespace::autoclean ();
 use Scalar::Util 'blessed';
 
 
 my ($import, undef, $init_meta) = Moose::Exporter->build_import_methods(
     also      => ['Moose', 'Bread::Board::Declare'],
-    with_meta => [qw(router route mount wrap wrap_if)],
-    as_is     => [qw(as literal)],
+    with_meta => [qw(router)],
+    as_is     => [qw(route mount wrap wrap_if as literal)],
     install   => [qw(unimport)],
     class_metaroles => {
         class => ['OX::Meta::Role::Class'],
@@ -32,7 +33,9 @@ my ($import, undef, $init_meta) = Moose::Exporter->build_import_methods(
 );
 
 sub import {
-    namespace::autoclean->import(-cleanee => scalar(caller));
+    my ($package, $args) = @_;
+    my $into = $args && $args->{into} ? $args->{into} : caller;
+    namespace::autoclean->import(-cleanee => $into);
     goto $import;
 }
 
@@ -48,10 +51,17 @@ sub init_meta {
 sub as (&) { $_[0] }
 
 
+our $CURRENT_CLASS;
+
 sub router {
-    my ($meta, @args) = @_;
+    my ($top_meta, @args) = @_;
+
+    my $meta = $CURRENT_CLASS
+        ? _new_router_meta($CURRENT_CLASS)
+        : $top_meta;
+
     confess "Only one top level router is allowed"
-        if $meta->has_route_builders;
+        if !$CURRENT_CLASS && $meta->has_route_builders;
 
     if (ref($args[0]) eq 'ARRAY') {
         $meta->add_route_builder($_) for @{ $args[0] };
@@ -69,86 +79,115 @@ sub router {
     }
     elsif (ref($body) eq 'CODE') {
         if (!$meta->has_route_builders) {
-            $meta->add_route_builder('OX::RouteBuilder::ControllerAction');
-            $meta->add_route_builder('OX::RouteBuilder::HTTPMethod');
-            $meta->add_route_builder('OX::RouteBuilder::Code');
+            if ($CURRENT_CLASS) {
+                for my $route_builder ($CURRENT_CLASS->route_builders) {
+                    $meta->add_route_builder($route_builder);
+                }
+            }
+            else {
+                $meta->add_route_builder('OX::RouteBuilder::ControllerAction');
+                $meta->add_route_builder('OX::RouteBuilder::HTTPMethod');
+                $meta->add_route_builder('OX::RouteBuilder::Code');
+            }
         }
 
+        local $CURRENT_CLASS = $meta;
         $body->();
     }
     else {
         confess "Unknown argument to 'router': $body";
     }
+
+    if (defined wantarray) {
+        return $meta->new_object->to_app;
+    }
+}
+
+sub _new_router_meta {
+    my ($meta) = @_;
+
+    return find_meta($meta)->name->create_anon_class(
+        superclasses => [$meta->name],
+    );
 }
 
 
 sub route {
-    my ($meta, $path, $action_spec, %params) = @_;
+    my ($path, $action_spec, %params) = @_;
 
-    my ($class, $route_spec) = $meta->route_builder_for($action_spec);
-    $meta->add_route(
+    confess "route called outside of a router block"
+        unless $CURRENT_CLASS;
+
+    my ($class, $route_spec) = $CURRENT_CLASS->route_builder_for($action_spec);
+    $CURRENT_CLASS->add_route(
         path                => $path,
         class               => $class,
         route_spec          => $route_spec,
         params              => \%params,
-        definition_location => $meta->name,
+        definition_location => $CURRENT_CLASS->name,
     );
 }
 
 
 sub mount {
-    my ($meta, $path, $mount, %params) = @_;
+    my ($path, $mount, %deps) = @_;
+
+    confess "mount called outside of a router block"
+        unless $CURRENT_CLASS;
 
     my %default = (
         path                => $path,
-        definition_location => $meta->name,
+        definition_location => $CURRENT_CLASS->name,
     );
 
+    my %extra;
     if (!ref($mount)) {
-        $meta->add_mount(
-            %default,
+        %extra = (
             class        => $mount,
-            dependencies => \%params,
+            dependencies => \%deps,
         );
     }
     elsif (blessed($mount)) {
-        confess "Class " . blessed($mount) . " must implement a to_app method"
-            unless $mount->can('to_app');
-
-        $meta->add_mount(
-            %default,
+        %extra = (
             app => $mount->to_app,
         );
     }
     elsif (ref($mount) eq 'CODE') {
-        $meta->add_mount(
-            %default,
+        %extra = (
             app => $mount,
         )
     }
     else {
         confess "Unknown mount $mount";
     }
+
+    $CURRENT_CLASS->add_mount(%default, %extra);
 }
 
 
 sub wrap {
-    my ($meta, $middleware, %deps) = @_;
+    my ($middleware, %deps) = @_;
 
-    $meta->add_middleware(
-        middleware => $middleware,
-        deps       => \%deps,
+    confess "wrap called outside of a router block"
+        unless $CURRENT_CLASS;
+
+    $CURRENT_CLASS->add_middleware(
+        middleware   => $middleware,
+        dependencies => \%deps,
     );
 }
 
 
 sub wrap_if {
-    my ($meta, $condition, $middleware, %deps) = @_;
+    my ($condition, $middleware, %deps) = @_;
 
-    $meta->add_middleware(
-        condition  => $condition,
-        middleware => $middleware,
-        deps       => \%deps,
+    confess "wrap_if called outside of a router block"
+        unless $CURRENT_CLASS;
+
+    $CURRENT_CLASS->add_middleware(
+        condition    => $condition,
+        middleware   => $middleware,
+        dependencies => \%deps,
     );
 }
 
@@ -174,7 +213,7 @@ OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.07
+version 0.08
 
 =head1 SYNOPSIS
 
@@ -295,6 +334,36 @@ optional hash of dependencies, which will be resolved and passed into the
 class's constructor as arguments. Note that parentheses are required if the
 argument is a literal constructor call, to avoid it being parsed as an indirect
 method call.
+
+  # myapp.psgi
+  use OX;
+  router as {
+      route '/' => sub { "Hello world" };
+  };
+
+This function (if called in non-void context) also returns the fully-built PSGI
+app coderef. This means that you can define an OX class in a C<.psgi> file with
+the router block as the last statement in the file, and have it be valid.
+
+  router as {
+      route '/' => 'root.index';
+      mount '/admin' => router as {
+          wrap "MyApp::Middleware::Auth";
+          route '/' => 'admin.index';
+      };
+  };
+
+In addition, router blocks handle nesting properly. If you declare a new router
+block inside of the main router block, it will allow you to define an entirely
+separate application which you can mount wherever you want (see C<mount>
+below). Nested routers will have full access to the services defined in the
+main app. This can be used, for instance, to apply certain middleware to only
+parts of the application, or just to organize the application better.
+
+Note that while they are being defined inline, these are still just normal
+mounts. This means that examining the C<path> in the request object will only
+give the path relative to the nested router (the remainder will be in
+C<script_name>).
 
 =head2 route $path, $action_spec, %params
 

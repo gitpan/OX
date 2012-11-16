@@ -16,6 +16,7 @@ lib/OX/Application/Role/Router/Path/Router.pm
 lib/OX/Application/Role/RouterConfig.pm
 lib/OX/Application/Role/Sugar.pm
 lib/OX/Meta/Conflict.pm
+lib/OX/Meta/Middleware.pm
 lib/OX/Meta/Mount.pm
 lib/OX/Meta/Mount/App.pm
 lib/OX/Meta/Mount/Class.pm
@@ -73,11 +74,13 @@ t/counter_over_engineered_sugar.t
 t/counter_tiny.t
 t/custom_router.t
 t/default_middleware.t
+t/default_name.t
 t/default_view.t
 t/errors.t
 t/http_throwable.t
 t/inheritance.t
 t/inline_dependencies.t
+t/inline_mounts.t
 t/lotsa_routing.t
 t/middleware.t
 t/middleware_conditional.t

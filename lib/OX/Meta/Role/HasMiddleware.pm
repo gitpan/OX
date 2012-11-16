@@ -3,38 +3,36 @@ BEGIN {
   $OX::Meta::Role::HasMiddleware::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::HasMiddleware::VERSION = '0.07';
+  $OX::Meta::Role::HasMiddleware::VERSION = '0.08';
 }
 use Moose::Role;
 use namespace::autoclean;
 
 use List::MoreUtils 'any';
-use Moose::Util::TypeConstraints 'find_type_constraint';
+
+use OX::Meta::Middleware;
 
 has middleware => (
     traits  => ['Array'],
-    isa     => 'ArrayRef[HashRef]',
+    isa     => 'ArrayRef[OX::Meta::Middleware]',
     default => sub { [] },
     handles => {
-        middleware      => 'elements',
-        _add_middleware => 'push',
+        middleware        => 'elements',
+        _add_middleware   => 'push',
+        _clear_middleware => 'clear',
     },
 );
 
 sub add_middleware {
     my $self = shift;
-    my $opts = @_ > 1 ? { @_ } : $_[0];
 
-    my $tc = find_type_constraint('OX::Types::Middleware');
-    $tc->assert_valid($opts->{middleware});
-
-    $self->_add_middleware($opts);
+    $self->_add_middleware(OX::Meta::Middleware->new(@_));
 }
 
 sub has_middleware_dependencies {
     my $self = shift;
 
-    return any { %{ $_->{deps} } } $self->middleware;
+    return any { %{ $_->dependencies } } $self->middleware;
 }
 
 sub all_middleware {
