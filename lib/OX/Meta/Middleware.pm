@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Middleware::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Middleware::VERSION = '0.08';
+  $OX::Meta::Middleware::VERSION = '0.09';
 }
 use Moose;
 use namespace::autoclean;

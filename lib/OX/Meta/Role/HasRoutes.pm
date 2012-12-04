@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::HasRoutes::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::HasRoutes::VERSION = '0.08';
+  $OX::Meta::Role::HasRoutes::VERSION = '0.09';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -58,9 +58,6 @@ sub add_route {
         unless @_ == 1 && blessed($_[0]);
 
     my $path = $route->path;
-
-    confess("A route already exists for $path")
-        if $self->has_route_for($path);
 
     for my $mount ($self->mounts) {
         my $mount_path = $mount->path;

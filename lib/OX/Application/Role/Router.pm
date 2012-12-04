@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::VERSION = '0.08';
+  $OX::Application::Role::Router::VERSION = '0.09';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -112,7 +112,7 @@ OX::Application::Role::Router - base role for applications with routers
 
 =head1 VERSION
 
-version 0.08
+version 0.09
 
 =head1 DESCRIPTION
 

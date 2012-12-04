@@ -65,7 +65,7 @@ resources:
   bugtracker: http://rt.cpan.org/Public/Dist/Display.html?Name=OX
   homepage: http://metacpan.org/release/OX
   repository: git://github.com/stevan/OX.git
-version: 0.08
+version: 0.09
 x_Dist_Zilla:
   perl:
     version: 5.016002

@@ -99,7 +99,7 @@
          "web" : "https://github.com/stevan/OX"
       }
    },
-   "version" : "0.08",
+   "version" : "0.09",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.016002"

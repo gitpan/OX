@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Class::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Class::VERSION = '0.08';
+  $OX::Meta::Role::Class::VERSION = '0.09';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -20,19 +20,12 @@ with 'OX::Meta::Role::HasRouteBuilders',
 sub router_config {
     my $self = shift;
 
-    my $config = {
-        map {
-            my $config = $_;
-            map { OX::Util::canonicalize_path($_) => [ $_, $config->{$_} ] }
-                keys %$config
-        }
-        map { $_->_local_router_config }
+    return {
+        map { %{ $_->_local_router_config } }
         grep { $_ && does_role($_, 'OX::Meta::Role::Class') }
         map { find_meta($_) }
         reverse $self->linearized_isa
     };
-
-    return { map { @$_ } values %$config };
 }
 
 sub _local_router_config {
