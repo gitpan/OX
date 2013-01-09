@@ -3,7 +3,7 @@ BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.09';
+  $OX::VERSION = '0.10';
 }
 use Moose::Exporter;
 use 5.010;
@@ -213,7 +213,7 @@ OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -258,6 +258,9 @@ might be configured as an OX application.
           number => { isa => 'Int' },
       );
   };
+
+For a more comprehensive introduction, you should check out the
+L<2012 OX advent calendar|http://ox.iinteractive.com/advent/>.
 
 =head1 DESCRIPTION
 
@@ -523,6 +526,9 @@ L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=OX>.
 
 =head1 SEE ALSO
 
+L<Dancer>, L<Catalyst>, L<Web::Simple>, L<Mojolicious> for other web frameworks
+in Perl.
+
 =head1 SUPPORT
 
 The IRC channel for this project is C<#ox> on C<irc.perl.org>.
@@ -572,7 +578,7 @@ Jesse Luehrs <doy at cpan dot org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Infinity Interactive.
+This software is copyright (c) 2013 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.09';
+  $OX::RouteBuilder::ControllerAction::VERSION = '0.10';
 }
 use Moose;
 use namespace::autoclean;
@@ -85,7 +85,7 @@ OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action 
 
 =head1 VERSION
 
-version 0.09
+version 0.10
 
 =head1 SYNOPSIS
 
@@ -131,7 +131,7 @@ Jesse Luehrs <doy at cpan dot org>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2012 by Infinity Interactive.
+This software is copyright (c) 2013 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

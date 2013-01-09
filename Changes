@@ -1,5 +1,10 @@
 Revision history for OX
 
+0.10  2013-01-09
+      - bump Path::Router dep to make sure we have all of the features we need.
+        in particular, tests fail without the improved route match
+        disambiguation introduced in 0.11.
+
 0.09  2012-12-03
       - fix handling of multiple routes with equivalent paths (but different
         validations)

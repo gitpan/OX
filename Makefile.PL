@@ -47,6 +47,7 @@ my %WriteMakefileArgs = (
     "Moose::Role" => 0,
     "Moose::Util" => 0,
     "Moose::Util::TypeConstraints" => 0,
+    "Path::Router" => "0.11",
     "Plack" => "1.0012",
     "Plack::App::Path::Router::Custom" => "0.05",
     "Plack::App::URLMap" => 0,
@@ -61,7 +62,7 @@ my %WriteMakefileArgs = (
     "strict" => 0,
     "warnings" => 0
   },
-  "VERSION" => "0.09",
+  "VERSION" => "0.10",
   "test" => {
     "TESTS" => "t/*.t"
   }
