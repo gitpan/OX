@@ -3,11 +3,13 @@ BEGIN {
   $OX::RouteBuilder::HTTPMethod::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::HTTPMethod::VERSION = '0.10';
+  $OX::RouteBuilder::HTTPMethod::VERSION = '0.11';
 }
 use Moose;
 use namespace::autoclean;
 # ABSTRACT: OX::RouteBuilder which routes to a method in a controller based on the HTTP method
+
+use Try::Tiny;
 
 with 'OX::RouteBuilder';
 
@@ -28,11 +30,12 @@ sub compile_routes {
         my $match = $req->mapping;
         my $a = $match->{action};
 
-        my $s = $app->fetch($a);
+        my $err;
+        my $s = try { $app->fetch($a) } catch { ($err) = split "\n"; undef };
         return [
             500,
             [],
-            [blessed($app) . " has no service $a"]
+            ["Cannot resolve $a in " . blessed($app) . ": $err"]
         ] unless $s;
 
         my $component = $s->get;
@@ -89,7 +92,7 @@ OX::RouteBuilder::HTTPMethod - OX::RouteBuilder which routes to a method in a co
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

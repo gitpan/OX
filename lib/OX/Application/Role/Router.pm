@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::VERSION = '0.10';
+  $OX::Application::Role::Router::VERSION = '0.11';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -11,6 +11,7 @@ use namespace::autoclean;
 
 use Bread::Board;
 use Class::Load 'load_class';
+use Scalar::Util 'weaken';
 
 
 
@@ -18,7 +19,8 @@ requires qw(router_class app_from_router);
 
 sub BUILD { }
 before BUILD => sub {
-    my $self = shift;
+    my $_self = shift;
+    weaken(my $self = $_self);
 
     container $self => as {
         service Router => (
@@ -112,7 +114,7 @@ OX::Application::Role::Router - base role for applications with routers
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 DESCRIPTION
 

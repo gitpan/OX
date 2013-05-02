@@ -3,11 +3,13 @@ BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.10';
+  $OX::RouteBuilder::ControllerAction::VERSION = '0.11';
 }
 use Moose;
 use namespace::autoclean;
 # ABSTRACT: OX::RouteBuilder which routes to an action method in a controller class
+
+use Try::Tiny;
 
 with 'OX::RouteBuilder';
 
@@ -29,11 +31,12 @@ sub compile_routes {
         my $c = $match->{controller};
         my $a = $match->{action};
 
-        my $s = $app->fetch($c);
+        my $err;
+        my $s = try { $app->fetch($c) } catch { ($err) = split "\n"; undef };
         return [
             500,
             [],
-            [blessed($app) . " has no service $c"]
+            ["Cannot resolve $c in " . blessed($app) . ": $err"]
         ] unless $s;
 
         my $component = $s->get;
@@ -85,7 +88,7 @@ OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action 
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

@@ -43,6 +43,7 @@ lib/OX/Types.pm
 lib/OX/Util.pm
 t/00-compile.t
 t/Preload.pm
+t/app_circular_reference.t
 t/apps/Counter-Improved/lib/Counter/Improved.pm
 t/apps/Counter-Improved/root/templates/index.tmpl
 t/apps/Counter-Improved/scripts/app.psgi
@@ -98,6 +99,7 @@ t/role_middleware.t
 t/role_role_application.t
 t/role_routebuilders.t
 t/roles_basic.t
+t/route_builder_missing_service.t
 t/route_builders.t
 t/route_validations.t
 t/router_config.t

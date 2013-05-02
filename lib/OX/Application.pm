@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::VERSION = '0.10';
+  $OX::Application::VERSION = '0.11';
 }
 use Moose 2.0200;
 use namespace::autoclean;
@@ -12,6 +12,7 @@ use namespace::autoclean;
 use Bread::Board;
 use Plack::Middleware::HTTPExceptions;
 use Plack::Util;
+use Scalar::Util 'weaken';
 use Try::Tiny;
 
 use OX::Util;
@@ -27,7 +28,8 @@ has name => (
 );
 
 sub BUILD {
-    my $self = shift;
+    my $_self = shift;
+    weaken(my $self = $_self);
 
     container $self => as {
         service Middleware => (
@@ -138,7 +140,7 @@ OX::Application - base class for OX applications
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

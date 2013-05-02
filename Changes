@@ -1,5 +1,11 @@
 Revision history for OX
 
+0.11  2013-05-02
+      - fix a couple memory leaks in the Bread::Board parts. (danielr)
+      - proper error return for errors looking up action methods in
+        ControllerAction and HTTPMethod route builders. (danielr)
+      - properly decode path args (reported by Clay Fouts)
+
 0.10  2013-01-09
       - bump Path::Router dep to make sure we have all of the features we need.
         in particular, tests fail without the improved route match

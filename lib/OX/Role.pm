@@ -3,7 +3,7 @@ BEGIN {
   $OX::Role::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Role::VERSION = '0.10';
+  $OX::Role::VERSION = '0.11';
 }
 use Moose::Exporter;
 use 5.010;
@@ -120,7 +120,7 @@ OX::Role - declare roles for your OX applications
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 

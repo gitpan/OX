@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::Path::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::Path::Router::VERSION = '0.10';
+  $OX::Application::Role::Router::Path::Router::VERSION = '0.11';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -27,9 +27,14 @@ sub app_from_router {
         },
         target_to_app => sub {
             my ($target) = @_;
-            blessed($target) && $target->can('to_app')
+            my $app = blessed($target) && $target->can('to_app')
                 ? $target->to_app
                 : $target;
+            sub {
+                my ($req, @args) = @_;
+                @args = map { $req->_decode($_) } @args;
+                $app->($req, @args);
+            }
         },
         handle_response => sub {
             $self->handle_response(@_);
@@ -50,7 +55,7 @@ OX::Application::Role::Router::Path::Router - implementation of OX::Application:
 
 =head1 VERSION
 
-version 0.10
+version 0.11
 
 =head1 SYNOPSIS
 
