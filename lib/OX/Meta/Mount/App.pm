@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Mount::App::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Mount::App::VERSION = '0.11';
+  $OX::Meta::Mount::App::VERSION = '0.12';
 }
 use Moose;
 use namespace::autoclean;
@@ -17,5 +17,9 @@ has app => (
 );
 
 __PACKAGE__->meta->make_immutable;
+
+=for Pod::Coverage
+
+=cut
 
 1;

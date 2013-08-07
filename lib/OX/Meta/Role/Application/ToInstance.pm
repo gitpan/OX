@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::ToInstance::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::ToInstance::VERSION = '0.11';
+  $OX::Meta::Role::Application::ToInstance::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -16,5 +16,9 @@ sub _apply_routes {
 
     $obj->regenerate_router_config;
 }
+
+=for Pod::Coverage
+
+=cut
 
 1;

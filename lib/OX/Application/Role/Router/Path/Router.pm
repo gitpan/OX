@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::Path::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::Path::Router::VERSION = '0.11';
+  $OX::Application::Role::Router::Path::Router::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -55,7 +55,7 @@ OX::Application::Role::Router::Path::Router - implementation of OX::Application:
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -93,11 +93,11 @@ implement C<configure_router>.
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

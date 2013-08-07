@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Router::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Router::VERSION = '0.11';
+  $OX::Application::Role::Router::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -114,7 +114,7 @@ OX::Application::Role::Router - base role for applications with routers
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 DESCRIPTION
 
@@ -174,11 +174,11 @@ dependencies can be accessed in the C<build_router> method.
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

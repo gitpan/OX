@@ -79,6 +79,7 @@ t/default_name.t
 t/default_view.t
 t/errors.t
 t/http_throwable.t
+t/inherit-bread-board.t
 t/inheritance.t
 t/inline_dependencies.t
 t/inline_mounts.t
@@ -104,6 +105,7 @@ t/route_builders.t
 t/route_validations.t
 t/router_config.t
 t/router_dependencies.t
+t/singleton_middleware.t
 t/streaming.t
 t/sugar_parsing.t
 t/uri_for.t

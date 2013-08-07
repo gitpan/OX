@@ -3,7 +3,7 @@ BEGIN {
   $OX::RouteBuilder::Code::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::RouteBuilder::Code::VERSION = '0.11';
+  $OX::RouteBuilder::Code::VERSION = '0.12';
 }
 use Moose;
 use namespace::autoclean;
@@ -48,7 +48,7 @@ OX::RouteBuilder::Code - OX::RouteBuilder which routes to a coderef
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -72,11 +72,11 @@ This is an L<OX::RouteBuilder> which allows routing directly to a coderef.
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

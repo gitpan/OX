@@ -10,7 +10,7 @@ use ExtUtils::MakeMaker 6.30;
 
 my %WriteMakefileArgs = (
   "ABSTRACT" => "the hardest working two letters in Perl",
-  "AUTHOR" => "Stevan Little <stevan.little at iinteractive.com>, Jesse Luehrs <doy at cpan dot org>",
+  "AUTHOR" => "Stevan Little <stevan.little\@iinteractive.com>, Jesse Luehrs <doy\@tozt.net>",
   "BUILD_REQUIRES" => {},
   "CONFIGURE_REQUIRES" => {
     "ExtUtils::MakeMaker" => "6.30"
@@ -27,7 +27,7 @@ my %WriteMakefileArgs = (
     "Carp" => 0,
     "Class::Load" => "0.10",
     "List::MoreUtils" => 0,
-    "Moose" => "2.0600",
+    "Moose" => "2.1005",
     "Moose::Exporter" => 0,
     "Moose::Role" => 0,
     "Moose::Util" => 0,
@@ -48,6 +48,7 @@ my %WriteMakefileArgs = (
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
+    "Container" => 0,
     "File::Find" => 0,
     "File::Temp" => 0,
     "HTTP::Request" => 0,
@@ -63,7 +64,7 @@ my %WriteMakefileArgs = (
     "Test::Requires" => 0,
     "utf8" => 0
   },
-  "VERSION" => "0.11",
+  "VERSION" => "0.12",
   "test" => {
     "TESTS" => "t/*.t"
   }

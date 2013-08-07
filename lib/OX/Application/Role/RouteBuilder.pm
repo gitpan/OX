@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::RouteBuilder::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::RouteBuilder::VERSION = '0.11';
+  $OX::Application::Role::RouteBuilder::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -60,7 +60,7 @@ OX::Application::Role::RouteBuilder - application role to configure a router bas
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -132,11 +132,11 @@ arguments, but you can override this in your app to provide more features.
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

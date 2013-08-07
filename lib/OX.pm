@@ -3,7 +3,7 @@ BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::VERSION = '0.11';
+  $OX::VERSION = '0.12';
 }
 use Moose::Exporter;
 use 5.010;
@@ -166,7 +166,13 @@ sub mount {
 
 
 sub wrap {
-    my ($middleware, %deps) = @_;
+    my ($lifecycle, $middleware, %deps);
+    if (@_ % 2) {
+        ($middleware, %deps) = @_;
+    }
+    else {
+        ($lifecycle, $middleware, %deps) = @_;
+    }
 
     confess "wrap called outside of a router block"
         unless $CURRENT_CLASS;
@@ -174,6 +180,9 @@ sub wrap {
     $CURRENT_CLASS->add_middleware(
         middleware   => $middleware,
         dependencies => \%deps,
+        (defined $lifecycle
+            ? (lifecycle => $lifecycle)
+            : ()),
     );
 }
 
@@ -213,7 +222,7 @@ OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -520,9 +529,8 @@ option to L<Plack::Middleware::ErrorDocument>.
 
 No known bugs.
 
-Please report any bugs through RT: email
-C<bug-ox at rt.cpan.org>, or browse to
-L<http://rt.cpan.org/NoAuth/ReportBug.html?Queue=OX>.
+Please report any bugs to GitHub Issues at
+L<https://github.com/iinteractive/OX/issues>.
 
 =head1 SEE ALSO
 
@@ -541,21 +549,21 @@ You can also look for information at:
 
 =over 4
 
-=item * AnnoCPAN: Annotated CPAN documentation
+=item * MetaCPAN
 
-L<http://annocpan.org/dist/OX>
+L<https://metacpan.org/release/OX>
 
-=item * CPAN Ratings
+=item * Github
 
-L<http://cpanratings.perl.org/d/OX>
+L<https://github.com/iinteractive/OX>
 
 =item * RT: CPAN's request tracker
 
 L<http://rt.cpan.org/NoAuth/Bugs.html?Dist=OX>
 
-=item * Search CPAN
+=item * CPAN Ratings
 
-L<http://search.cpan.org/dist/OX>
+L<http://cpanratings.perl.org/d/OX>
 
 =back
 
@@ -568,11 +576,11 @@ L<http://search.cpan.org/dist/OX>
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

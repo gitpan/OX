@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Mount::Class::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Mount::Class::VERSION = '0.11';
+  $OX::Meta::Mount::Class::VERSION = '0.12';
 }
 use Moose;
 use namespace::autoclean;
@@ -23,5 +23,9 @@ has dependencies => (
 );
 
 __PACKAGE__->meta->make_immutable;
+
+=for Pod::Coverage
+
+=cut
 
 1;

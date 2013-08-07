@@ -3,7 +3,7 @@ BEGIN {
   $OX::Response::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Response::VERSION = '0.11';
+  $OX::Response::VERSION = '0.12';
 }
 use Moose;
 use namespace::autoclean;
@@ -26,7 +26,7 @@ OX::Response - response object for OX
 
 =head1 VERSION
 
-version 0.11
+version 0.12
 
 =head1 SYNOPSIS
 
@@ -47,11 +47,11 @@ in later.
 
 =item *
 
-Stevan Little <stevan.little at iinteractive.com>
+Stevan Little <stevan.little@iinteractive.com>
 
 =item *
 
-Jesse Luehrs <doy at cpan dot org>
+Jesse Luehrs <doy@tozt.net>
 
 =back
 

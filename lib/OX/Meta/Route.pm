@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Route::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Route::VERSION = '0.11';
+  $OX::Meta::Route::VERSION = '0.12';
 }
 use Moose;
 use namespace::autoclean;

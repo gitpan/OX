@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Composite::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Composite::VERSION = '0.11';
+  $OX::Meta::Role::Composite::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -96,5 +96,9 @@ sub _merge_routes {
         $self->_add_mount($mount);
     }
 }
+
+=for Pod::Coverage
+
+=cut
 
 1;

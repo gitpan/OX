@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Sugar::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Sugar::VERSION = '0.11';
+  $OX::Application::Role::Sugar::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;

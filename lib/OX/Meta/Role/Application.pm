@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::VERSION = '0.11';
+  $OX::Meta::Role::Application::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -16,5 +16,9 @@ after apply => sub {
 
     $self->_apply_routes($role, $class);
 };
+
+=for Pod::Coverage
+
+=cut
 
 1;

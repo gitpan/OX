@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::ToRole::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::ToRole::VERSION = '0.11';
+  $OX::Meta::Role::Application::ToRole::VERSION = '0.12';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -34,5 +34,9 @@ sub _apply_routes {
         $role2->_add_mixed_conflict($conflict);
     }
 }
+
+=for Pod::Coverage
+
+=cut
 
 1;

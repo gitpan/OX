@@ -3,7 +3,7 @@ BEGIN {
   $OX::Types::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Types::VERSION = '0.11';
+  $OX::Types::VERSION = '0.12';
 }
 use strict;
 use warnings;
@@ -17,5 +17,9 @@ subtype 'OX::Types::MiddlewareClass',
      where { load_class($_); $_->isa('Plack::Middleware') };
 subtype 'OX::Types::Middleware',
      as 'CodeRef|OX::Types::MiddlewareClass|Plack::Middleware';
+
+=for Pod::Coverage
+
+=cut
 
 1;

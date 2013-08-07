@@ -3,7 +3,7 @@ BEGIN {
   $OX::Util::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Util::VERSION = '0.11';
+  $OX::Util::VERSION = '0.12';
 }
 use strict;
 use warnings;
