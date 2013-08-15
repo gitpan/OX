@@ -1,5 +1,8 @@
 Revision history for OX
 
+0.13  2013-08-14
+      - fix inadvertent test dep (Caleb Cushing, #14)
+
 0.12  2013-08-07
       - allow specifying lifecycles for middleware declared with the 'wrap'
         keyword. this should allow you to create middleware which depend on

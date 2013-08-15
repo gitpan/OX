@@ -3,7 +3,7 @@ BEGIN {
   $OX::Application::Role::Request::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Application::Role::Request::VERSION = '0.12';
+  $OX::Application::Role::Request::VERSION = '0.13';
 }
 use Moose::Role;
 use namespace::autoclean;
@@ -60,7 +60,7 @@ OX::Application::Role::Request - application role to allow the use of request an
 
 =head1 VERSION
 
-version 0.12
+version 0.13
 
 =head1 SYNOPSIS
 

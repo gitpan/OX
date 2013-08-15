@@ -72,7 +72,6 @@
       },
       "test" : {
          "requires" : {
-            "Container" : "0",
             "File::Find" : "0",
             "File::Temp" : "0",
             "HTTP::Request" : "0",
@@ -102,7 +101,7 @@
          "web" : "https://github.com/iinteractive/OX"
       }
    },
-   "version" : "0.12",
+   "version" : "0.13",
    "x_Dist_Zilla" : {
       "perl" : {
          "version" : "5.018000"

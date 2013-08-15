@@ -48,7 +48,6 @@ my %WriteMakefileArgs = (
     "warnings" => 0
   },
   "TEST_REQUIRES" => {
-    "Container" => 0,
     "File::Find" => 0,
     "File::Temp" => 0,
     "HTTP::Request" => 0,
@@ -64,7 +63,7 @@ my %WriteMakefileArgs = (
     "Test::Requires" => 0,
     "utf8" => 0
   },
-  "VERSION" => "0.12",
+  "VERSION" => "0.13",
   "test" => {
     "TESTS" => "t/*.t"
   }

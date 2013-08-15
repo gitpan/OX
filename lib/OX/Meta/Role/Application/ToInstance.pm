@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::Application::ToInstance::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::Application::ToInstance::VERSION = '0.12';
+  $OX::Meta::Role::Application::ToInstance::VERSION = '0.13';
 }
 use Moose::Role;
 use namespace::autoclean;

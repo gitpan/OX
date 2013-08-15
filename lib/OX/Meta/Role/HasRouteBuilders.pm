@@ -3,7 +3,7 @@ BEGIN {
   $OX::Meta::Role::HasRouteBuilders::AUTHORITY = 'cpan:STEVAN';
 }
 {
-  $OX::Meta::Role::HasRouteBuilders::VERSION = '0.12';
+  $OX::Meta::Role::HasRouteBuilders::VERSION = '0.13';
 }
 use Moose::Role;
 use namespace::autoclean;
