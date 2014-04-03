@@ -2,9 +2,7 @@ package OX;
 BEGIN {
   $OX::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::VERSION = '0.13';
-}
+$OX::VERSION = '0.14';
 use Moose::Exporter;
 use 5.010;
 # ABSTRACT: the hardest working two letters in Perl
@@ -52,6 +50,7 @@ sub as (&) { $_[0] }
 
 
 our $CURRENT_CLASS;
+our %INITIALIZED_CLASSES;
 
 sub router {
     my ($top_meta, @args) = @_;
@@ -61,11 +60,15 @@ sub router {
         : $top_meta;
 
     confess "Only one top level router is allowed"
-        if !$CURRENT_CLASS && $meta->has_route_builders;
+        if $INITIALIZED_CLASSES{$meta->name};
+    $INITIALIZED_CLASSES{$meta->name} = 1;
 
+    my $explicit_routebuilders;
     if (ref($args[0]) eq 'ARRAY') {
+        $meta->_clear_route_builders;
         $meta->add_route_builder($_) for @{ $args[0] };
         shift @args;
+        $explicit_routebuilders = 1;
     }
     my ($body, %params) = @args;
 
@@ -78,7 +81,7 @@ sub router {
         $meta->add_method(build_router => sub { $body });
     }
     elsif (ref($body) eq 'CODE') {
-        if (!$meta->has_route_builders) {
+        if (!$explicit_routebuilders) {
             if ($CURRENT_CLASS) {
                 for my $route_builder ($CURRENT_CLASS->route_builders) {
                     $meta->add_route_builder($route_builder);
@@ -216,13 +219,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 OX - the hardest working two letters in Perl
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -586,7 +591,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

@@ -2,9 +2,7 @@ package OX::Meta::Mount::App;
 BEGIN {
   $OX::Meta::Mount::App::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Meta::Mount::App::VERSION = '0.13';
-}
+$OX::Meta::Mount::App::VERSION = '0.14';
 use Moose;
 use namespace::autoclean;
 

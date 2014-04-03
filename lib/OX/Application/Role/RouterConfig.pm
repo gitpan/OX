@@ -2,9 +2,7 @@ package OX::Application::Role::RouterConfig;
 BEGIN {
   $OX::Application::Role::RouterConfig::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Application::Role::RouterConfig::VERSION = '0.13';
-}
+$OX::Application::Role::RouterConfig::VERSION = '0.14';
 use Moose::Role;
 use namespace::autoclean;
 # ABSTRACT: adds some common shortcuts to route declarations from OX::Application::Role::RouteBuilder
@@ -49,13 +47,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 OX::Application::Role::RouterConfig - adds some common shortcuts to route declarations from OX::Application::Role::RouteBuilder
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -114,7 +114,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

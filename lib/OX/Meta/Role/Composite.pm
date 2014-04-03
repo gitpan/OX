@@ -2,9 +2,7 @@ package OX::Meta::Role::Composite;
 BEGIN {
   $OX::Meta::Role::Composite::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Meta::Role::Composite::VERSION = '0.13';
-}
+$OX::Meta::Role::Composite::VERSION = '0.14';
 use Moose::Role;
 use namespace::autoclean;
 

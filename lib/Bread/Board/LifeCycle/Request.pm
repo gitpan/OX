@@ -2,9 +2,7 @@ package Bread::Board::LifeCycle::Request;
 BEGIN {
   $Bread::Board::LifeCycle::Request::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $Bread::Board::LifeCycle::Request::VERSION = '0.13';
-}
+$Bread::Board::LifeCycle::Request::VERSION = '0.14';
 use Moose::Role;
 use namespace::autoclean;
 # ABSTRACT: lifecycle for request-scoped services
@@ -20,13 +18,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 Bread::Board::LifeCycle::Request - lifecycle for request-scoped services
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -66,7 +66,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

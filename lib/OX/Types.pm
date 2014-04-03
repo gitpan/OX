@@ -2,9 +2,7 @@ package OX::Types;
 BEGIN {
   $OX::Types::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Types::VERSION = '0.13';
-}
+$OX::Types::VERSION = '0.14';
 use strict;
 use warnings;
 

@@ -2,9 +2,7 @@ package OX::Application::Role::Request;
 BEGIN {
   $OX::Application::Role::Request::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Application::Role::Request::VERSION = '0.13';
-}
+$OX::Application::Role::Request::VERSION = '0.14';
 use Moose::Role;
 use namespace::autoclean;
 # ABSTRACT: application role to allow the use of request and response objects
@@ -54,13 +52,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 OX::Application::Role::Request - application role to allow the use of request and response objects
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -128,7 +128,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

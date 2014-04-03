@@ -2,9 +2,7 @@ package OX::Meta::Middleware;
 BEGIN {
   $OX::Meta::Middleware::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Meta::Middleware::VERSION = '0.13';
-}
+$OX::Meta::Middleware::VERSION = '0.14';
 use Moose;
 use namespace::autoclean;
 

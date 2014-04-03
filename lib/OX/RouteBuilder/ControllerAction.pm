@@ -2,9 +2,7 @@ package OX::RouteBuilder::ControllerAction;
 BEGIN {
   $OX::RouteBuilder::ControllerAction::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::RouteBuilder::ControllerAction::VERSION = '0.13';
-}
+$OX::RouteBuilder::ControllerAction::VERSION = '0.14';
 use Moose;
 use namespace::autoclean;
 # ABSTRACT: OX::RouteBuilder which routes to an action method in a controller class
@@ -82,13 +80,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 OX::RouteBuilder::ControllerAction - OX::RouteBuilder which routes to an action method in a controller class
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -134,7 +134,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.

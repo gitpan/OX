@@ -2,9 +2,7 @@ package OX::Util;
 BEGIN {
   $OX::Util::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::Util::VERSION = '0.13';
-}
+$OX::Util::VERSION = '0.14';
 use strict;
 use warnings;
 

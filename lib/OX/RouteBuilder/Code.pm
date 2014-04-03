@@ -2,9 +2,7 @@ package OX::RouteBuilder::Code;
 BEGIN {
   $OX::RouteBuilder::Code::AUTHORITY = 'cpan:STEVAN';
 }
-{
-  $OX::RouteBuilder::Code::VERSION = '0.13';
-}
+$OX::RouteBuilder::Code::VERSION = '0.14';
 use Moose;
 use namespace::autoclean;
 # ABSTRACT: OX::RouteBuilder which routes to a coderef
@@ -42,13 +40,15 @@ __END__
 
 =pod
 
+=encoding UTF-8
+
 =head1 NAME
 
 OX::RouteBuilder::Code - OX::RouteBuilder which routes to a coderef
 
 =head1 VERSION
 
-version 0.13
+version 0.14
 
 =head1 SYNOPSIS
 
@@ -82,7 +82,7 @@ Jesse Luehrs <doy@tozt.net>
 
 =head1 COPYRIGHT AND LICENSE
 
-This software is copyright (c) 2013 by Infinity Interactive.
+This software is copyright (c) 2014 by Infinity Interactive.
 
 This is free software; you can redistribute it and/or modify it under
 the same terms as the Perl 5 programming language system itself.
